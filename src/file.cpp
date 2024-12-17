@@ -42,3 +42,8 @@ bool File::vide() const
 {
     return tete == nullptr;
 }
+
+int File::taille()
+{
+    return this->nbElements;
+}

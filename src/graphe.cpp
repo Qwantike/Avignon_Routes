@@ -207,8 +207,6 @@ int graphe::chemin(string o, string d)
     return -1;
 }
 
-// Faire file.vide()
-
 int graphe::plusCourtChemin(string o, string d)
 {
     // Récupérer les noeuds origine et destination
@@ -272,23 +270,21 @@ int graphe::plusCourtChemin(string o, string d)
             adjacents = adjacents->next;
         }
     }
-
     // Si on arrive ici, cela signifie qu'il n'y a pas de chemin entre l'origine et la destination
     cout << "Aucun chemin trouvé entre " << o << " et " << d << "." << endl;
     return 0;
 }
+
 int graphe::itineraire(string o, string d)
 {
     // Trouver les noeuds associés aux arcs par leurs identifiants
     node *startingNode = V.rechercherNode(E.chercherArc(o)->getStartingNode()); // Recherche le noeud de départ par l'ID de l'arc o
     node *endingNode = V.rechercherNode(E.chercherArc(d)->getEndingNode());     // Recherche le noeud de destination par l'ID de l'arc d
-
     if (startingNode == nullptr || endingNode == nullptr)
     {
         cout << "Un des noeuds n'a pas été trouvé." << endl;
         return 0; // Retourne 0 si l'un des noeuds est introuvable
     }
-
     // Appeler la fonction pour obtenir le plus court chemin entre les deux noeuds
     int cpt = plusCourtChemin(startingNode->getId(), endingNode->getId());
 

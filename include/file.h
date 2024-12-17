@@ -15,4 +15,5 @@ public:
     void enfiler(node *n);
     node *defiler();
     bool vide() const;
+    int taille();
 };
