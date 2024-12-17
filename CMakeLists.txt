@@ -2,7 +2,11 @@
 cmake_minimum_required(VERSION 3.10)
 
 # Nom du projet
+<<<<<<< HEAD
 project(ColdWallet)
+=======
+project(Avignon_Routes)
+>>>>>>> master
 
 # Spécification du standard C++
 set(CMAKE_CXX_STANDARD 17)

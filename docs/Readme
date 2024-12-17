@@ -2,6 +2,12 @@ Choix des structures :
 pour les ensemble (de noeud et d'arc) unordered_map car complixité de 1. 
 Map complexité de O(log(n))
 
+<<<<<<< HEAD
+=======
+Attention dans la liste d'incidence, un arc sortant n'a pas forcément son startingNode = à l'id du noeud dans ce cas c'est un arc oneway false et son endingnode = id 
+Le degré d'un noeud est incrémenté à chaque ajout d'un arc dans la liste arc entrant ou sortant (à l'intérieur de ces fonctions)
+
+>>>>>>> master
 Vector <id, degré> , le tri est de compléxité O(n (log n)) avec n la taille de l'ensemble de nodes.
 
 Concept de degre(n) : 

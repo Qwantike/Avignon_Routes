@@ -14,6 +14,18 @@
 # EXTERNAL cache entries
 ########################
 
+<<<<<<< HEAD
+=======
+//Value Computed by CMake
+Avignon_Routes_BINARY_DIR:STATIC=/home/paul/Documents/L2-INFO/S3/Algo-avance/AMS/build
+
+//Value Computed by CMake
+Avignon_Routes_IS_TOP_LEVEL:STATIC=ON
+
+//Value Computed by CMake
+Avignon_Routes_SOURCE_DIR:STATIC=/home/paul/Documents/L2-INFO/S3/Algo-avance/AMS
+
+>>>>>>> master
 //Path to a program.
 CMAKE_ADDR2LINE:FILEPATH=/usr/bin/addr2line
 
@@ -145,7 +157,11 @@ CMAKE_PROJECT_DESCRIPTION:STATIC=
 CMAKE_PROJECT_HOMEPAGE_URL:STATIC=
 
 //Value Computed by CMake
+<<<<<<< HEAD
 CMAKE_PROJECT_NAME:STATIC=ColdWallet
+=======
+CMAKE_PROJECT_NAME:STATIC=Avignon_Routes
+>>>>>>> master
 
 //Path to a program.
 CMAKE_RANLIB:FILEPATH=/usr/bin/ranlib
