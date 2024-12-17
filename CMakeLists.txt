@@ -2,7 +2,7 @@
 cmake_minimum_required(VERSION 3.10)
 
 # Nom du projet
-project(ColdWallet)
+project(Avignon_Routes)
 
 # Spécification du standard C++
 set(CMAKE_CXX_STANDARD 17)

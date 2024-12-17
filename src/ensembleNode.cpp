@@ -18,6 +18,16 @@ EnsembleNode::EnsembleNode(const string &path, EnsembleArc E, int &cpt)
     json data;
     fichier >> data;
     fichier.close();
+
+    // Ajouter les arcs correspondants
+    unordered_map<string, vector<arc *>> arcIndex;
+    for (auto &pair : E.getArcs())
+    {
+        arc *a = pair.second;
+        arcIndex[a->getStartingNode()].push_back(a);
+        arcIndex[a->getEndingNode()].push_back(a);
+    }
+
     // Parcourir les noeuds dans le JSON
     for (const auto &item : data)
     {
@@ -31,14 +41,6 @@ EnsembleNode::EnsembleNode(const string &path, EnsembleArc E, int &cpt)
 
         // Complexité nbArc + nbNode
 
-        // Ajouter les arcs correspondants
-        unordered_map<string, vector<arc *>> arcIndex;
-        for (auto &pair : E.getArcs())
-        {
-            arc *a = pair.second;
-            arcIndex[a->getStartingNode()].push_back(a);
-            arcIndex[a->getEndingNode()].push_back(a);
-        }
         for (arc *a : arcIndex[n->getId()])
         {
             n->ajouterArcListe(a);
