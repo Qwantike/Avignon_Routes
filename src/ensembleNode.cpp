@@ -7,7 +7,6 @@ EnsembleNode::EnsembleNode()
 
 EnsembleNode::EnsembleNode(const string &path, EnsembleArc E, int &cpt)
 {
-    // Ouvrir le fichier JSON
     ifstream fichier(path);
     if (!fichier.is_open())
     {
@@ -20,12 +19,12 @@ EnsembleNode::EnsembleNode(const string &path, EnsembleArc E, int &cpt)
     fichier.close();
 
     // Ajouter les arcs correspondants
+    // Ajouter à arcindex pour plus tard (listearc)
     unordered_map<string, vector<arc *>> arcIndex;
     for (auto &pair : E.getArcs())
     {
         arc *a = pair.second;
         arcIndex[a->getStartingNode()].push_back(a);
-        arcIndex[a->getEndingNode()].push_back(a);
     }
 
     // Parcourir les noeuds dans le JSON
@@ -36,7 +35,6 @@ EnsembleNode::EnsembleNode(const string &path, EnsembleArc E, int &cpt)
         string y = item.at("y").get<string>();
         string streetCount = item.at("street_count").get<string>();
 
-        // Créer le noeud
         node *n = new node(id, x, y, streetCount);
 
         // Complexité nbArc + nbNode
@@ -55,6 +53,7 @@ EnsembleNode::EnsembleNode(const string &path, EnsembleArc E, int &cpt)
                 n->ajouterArcListe(a);
             }
         } */
+
         // Ajouter le noeud à la map
         nodes[id] = n;
         cpt++;
@@ -82,7 +81,6 @@ void EnsembleNode::ajouterNode(node *n)
     }
 }
 
-// Rechercher un node par identifiant
 node *EnsembleNode::rechercherNode(const string &id)
 {
     auto node = nodes.find(id);
@@ -93,7 +91,6 @@ node *EnsembleNode::rechercherNode(const string &id)
     return nullptr;
 }
 
-// Afficher le contenu de l'ensemble
 void EnsembleNode::afficherContenu()
 {
     for (const auto &[id, n] : nodes)
@@ -103,7 +100,6 @@ void EnsembleNode::afficherContenu()
     }
 }
 
-// Supprimer un nœud par identifiant
 void EnsembleNode::supprimerNode(const string &id)
 {
     nodes.erase(id);
@@ -122,9 +118,10 @@ EnsembleNode::EnsembleNode(const EnsembleNode &other)
 // Opérateur d'assignation
 EnsembleNode &EnsembleNode::operator=(const EnsembleNode &other)
 {
-    if (this != &other) // Éviter l'auto-affectation
+    // != auto-affectation
+    if (this != &other)
     {
-        // Libérer les ressources existantes
+        // libérer
         for (auto &pair : nodes)
         {
             delete pair.second;
@@ -140,10 +137,9 @@ EnsembleNode &EnsembleNode::operator=(const EnsembleNode &other)
     return *this;
 }
 
-// Méthode pour obtenir les noeuds
 const std::unordered_map<std::string, node *> &EnsembleNode::getNodes() const
 {
-    return nodes; // Retourner une référence constante pour éviter une copie
+    return nodes; // retourner une référence constante pour éviter une copie
 }
 
 int EnsembleNode::getSizeMap()

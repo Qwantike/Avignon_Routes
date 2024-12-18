@@ -1,6 +1,5 @@
 #include "maillon.h"
 
-// Constructeur
 Maillon::Maillon(node *n, Maillon *prec, Maillon *suiv)
 {
     noeud = n;
@@ -8,7 +7,13 @@ Maillon::Maillon(node *n, Maillon *prec, Maillon *suiv)
     suivant = suiv;
 }
 
-// Accesseurs
+Maillon::~Maillon()
+{
+    noeud = nullptr;
+    precedent = nullptr;
+    suivant = nullptr;
+}
+
 node *Maillon::getNoeud() const
 {
     return noeud;
@@ -24,7 +29,6 @@ Maillon *Maillon::getSuivant() const
     return suivant;
 }
 
-// Mutateur
 void Maillon::setPrecedent(Maillon *prec)
 {
     precedent = prec;

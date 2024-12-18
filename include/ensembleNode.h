@@ -16,19 +16,21 @@ private:
     unordered_map<string, node *> nodes;
 
 public:
-    // Defaut
+    // Constructeur defaut
     EnsembleNode();
-    // vrai
+    // Constructeur vrai
     EnsembleNode(const string &path, EnsembleArc E, int &cpt);
-    // recopie
+    // Constructeur recopie
     EnsembleNode(const EnsembleNode &other);
+
     ~EnsembleNode();
+
     void ajouterNode(node *n);
     node *rechercherNode(const string &id);
     void afficherContenu();
     void supprimerNode(const string &id);
     int getSizeMap();
-    const std::unordered_map<std::string, node *> &getNodes() const;
+    const unordered_map<std::string, node *> &getNodes() const;
     EnsembleNode &operator=(const EnsembleNode &other);
 };
 

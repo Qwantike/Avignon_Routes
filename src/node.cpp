@@ -20,15 +20,14 @@ void node::affiche()
     cout << "Degré : " << this->degre;
 }
 
-// Méthode pour ajouter un arc sortant
 void node::ajouterArcSortant(arc *a)
 {
     ArcListe *tmp = new ArcListe(a);
-    if (arcSortant == nullptr) // Si la liste est vide, on affecte directement la tête
+    if (arcSortant == nullptr)
     {
         arcSortant = tmp;
     }
-    else // Sinon, on ajoute à la tête de la liste
+    else
     {
         tmp->next = arcSortant;
         arcSortant = tmp;
@@ -36,15 +35,14 @@ void node::ajouterArcSortant(arc *a)
     this->degre++;
 }
 
-// Méthode pour ajouter un arc entrant
 void node::ajouterArcEntrant(arc *a)
 {
     ArcListe *tmp = new ArcListe(a);
-    if (arcEntrant == nullptr) // Si la liste est vide, on affecte directement la tête
+    if (arcEntrant == nullptr)
     {
         arcEntrant = tmp;
     }
-    else // Sinon, on ajoute à la tête de la liste
+    else
     {
         tmp->next = arcEntrant;
         arcEntrant = tmp;
@@ -121,16 +119,12 @@ void node::ajouterArcListe(arc *a)
         else
         {
             if (e == this->id)
-                this->ajouterArcSortant(a); // Arc sortant
+                this->ajouterArcSortant(a);
             else if (s == this->id)
-                this->ajouterArcEntrant(a); // Arc entrant
+                this->ajouterArcEntrant(a);
         }
     }
 }
-
-/////////////
-// getters //
-/////////////
 
 string node::getId()
 {

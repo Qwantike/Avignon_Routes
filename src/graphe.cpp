@@ -19,12 +19,13 @@ graphe::graphe()
 }
 
 // pas utilisé car on remplie direct dans le constructeur de ensembleNode
+// fonction pas terrible
 void graphe::listeIncidence()
 {
-    // Parcourir tous les noeuds dans EnsembleNode
-    for (auto &pairNode : V.getNodes()) // getNodes() renvoie la map des noeuds
+    // Pour chaque noeud on check tous les arcs
+    for (auto &pairNode : V.getNodes())
     {
-        node *n = pairNode.second; // Pointeur vers le noeud actuel
+        node *n = pairNode.second;
 
         // Ajouter les arcs correspondants
         for (const auto &pairArc : E.getArcs()) // Parcourir tous les arcs
@@ -40,9 +41,9 @@ void graphe::degre(int n)
 
     if (n > 0 && n <= this->V.getSizeMap())
     {
-        // Créer un vector de paires (id de noeud, degré du noeud)
+        // on créer un vector de paires (id de noeud, degré du noeud)
         vector<pair<string, int>> degres;
-        // Remplir le vector avec les nœuds et leurs degrés
+        // on remplit le vector avec les nœuds et leurs degrés
         for (const auto &pair : this->V.getNodes())
         {
             node *n = pair.second;
@@ -79,39 +80,33 @@ void graphe::degre(int n)
     }
 }
 
-// Ajout de la méthode parcours dans graphe
 void graphe::parcours(node *s)
 {
-    // Créer une pile pour gérer le parcours
     Pile pile;
 
-    // Marquer tous les nœuds comme non visités
+    // dans le doute on marque tout comme non visité
     for (auto &pair : V.getNodes())
     {
-        pair.second->setVisited(false); // Remettre à faux la visite pour chaque nœud
+        pair.second->setVisited(false);
     }
-
-    // Empiler le noeud de départ
+    // Empiler premier node
     pile.empiler(s);
 
-    // Tant que la pile n'est pas vide
     while (!pile.vide())
     {
-        // Dépiler un noeud
+        // on dépile
         node *courant = pile.depiler();
 
-        // Si le noeud n'a pas encore été visité
         if (!courant->getVisited())
         {
-            cout << "Visiting node: " << courant->getId() << endl; // Affichage du noeud visité
-            courant->setVisited(true);                             // Marquer le noeud comme visité
+            courant->setVisited(true);
 
             // Empiler les voisins non visités
             ArcListe *arcs = courant->getAdjacentNodes();
             while (arcs != nullptr)
             {
-                string voisinId = arcs->a->getEndingNode(); // ID du voisin
-                node *voisin = V.rechercherNode(voisinId);  // Rechercher le noeud correspondant dans l'ensemble de nœuds                if (!voisin->getVisited())
+                string voisinId = arcs->a->getEndingNode();
+                node *voisin = V.rechercherNode(voisinId);
                 {
                     pile.empiler(voisin);
                 }
@@ -121,7 +116,7 @@ void graphe::parcours(node *s)
     }
 }
 
-// backtracking profondeur garantie pas le chemin le plus court contrairement à backtracking largeur
+// backtracking profondeur
 int graphe::chemin(string o, string d)
 {
     node *origine = V.rechercherNode(o);
@@ -133,7 +128,7 @@ int graphe::chemin(string o, string d)
         return -1;
     }
 
-    // Initialiser les nœuds comme non visités
+    // remettre les nœuds comme non visités au cas ou
     for (auto &pair : V.getNodes())
     {
         pair.second->setVisited(false);
@@ -142,9 +137,6 @@ int graphe::chemin(string o, string d)
     Pile pile;
     pile.empiler(origine);
     origine->setVisited(true);
-
-    // Liste pour stocker les arcs parcourus
-    // vector<string> arcsParcourus;
 
     while (!pile.vide())
     {
@@ -156,14 +148,6 @@ int graphe::chemin(string o, string d)
         {
             pile.afficherArcPileInversee(this->E);
             return pile.taille() - 1;
-            // Afficher le chemin basé sur le vecteur arcsParcourus
-            // cout << "Chemin : ";
-            // for (const string &arcId : arcsParcourus)
-            //{
-            //    cout << arcId << " - ";
-            //}
-            // cout << endl;
-            // return arcsParcourus.size(); // Retourner le nombre d'arcs parcourus
         }
 
         ArcListe *arcs = courant->getAdjacentNodes();
@@ -181,21 +165,17 @@ int graphe::chemin(string o, string d)
                 pile.empiler(voisin);
                 voisin->setVisited(true);
 
-                // Ajouter l'arc à la liste des arcs parcourus
+                // Ajouter à la liste des arcs parcourus
                 string arcId = this->E.rechercherArc(courant->getId(), idVoisin);
-                // if (!arcId.empty())
-                //{
-                //     arcsParcourus.push_back(arcId); // Ajouter l'arc au vecteur
-                // }
 
                 voisinTrouve = true;
                 break; // On suit ce chemin pour l'instant
             }
-
-            arcs = arcs->next; // Passer au voisin suivant
+            // on passer au voisin suivant
+            arcs = arcs->next;
         }
 
-        // Si aucun voisin non visité n'a été trouvé, faire un backtrack
+        // backtracking
         if (!voisinTrouve)
         {
             pile.depiler();
@@ -207,9 +187,10 @@ int graphe::chemin(string o, string d)
     return -1;
 }
 
+// parcours en largeur
 int graphe::plusCourtChemin(string o, string d)
 {
-    // Récupérer les noeuds origine et destination
+    // noeuds origine et destination
     node *origine = V.rechercherNode(o);
     node *destination = V.rechercherNode(d);
 
@@ -220,6 +201,7 @@ int graphe::plusCourtChemin(string o, string d)
     }
 
     // Initialiser la file pour le BFS
+
     File file;
     origine->setVisited(true);
     file.enfiler(origine);
@@ -227,67 +209,69 @@ int graphe::plusCourtChemin(string o, string d)
     // Map pour suivre les prédecesseurs
     unordered_map<node *, node *> predecesseurs;
 
-    // Initialiser la pile pour stocker le chemin
+    // pile pour chemin
     Pile pile;
 
-    // BFS classique
+    // parcours largeur
     while (!file.vide())
     {
         node *current = file.defiler();
 
-        // Si on atteint la destination, on reconstruit le chemin
+        // si destination atteinte
         if (current == destination)
         {
             node *temp = destination;
 
-            // Reconstruire le chemin dans la pile en utilisant les prédecesseurs
+            // Reconstruire le chemin en utilisant les prédecesseurs
             while (temp != nullptr)
             {
-                pile.empiler(temp);         // Empiler le noeud
-                temp = predecesseurs[temp]; // Remonter vers le prédécesseur
+                pile.empiler(temp);
+                temp = predecesseurs[temp]; // aller au truc précédent
             }
-
-            // Afficher le chemin via la pile
+            // affichage via pile
             cout << "Chemin le plus court (en termes d'arcs) : ";
             int cpt = pile.taille() - 1;
             pile.afficherArcPile(E);
-
-            // Retourner le nombre d'arcs
             return cpt;
         }
 
-        // Explorer les voisins du noeud actuel
+        // explorer les voisins du noeud actuel
         ArcListe *adjacents = current->getAdjacentNodes();
         while (adjacents != nullptr)
         {
             node *neighbor = V.rechercherNode(adjacents->a->getEndingNode());
+            if (neighbor == nullptr)
+            {
+                cout << "Erreur : Le voisin est nul." << endl;
+                break; // Passer à l'itération suivante, arrive si on fait degré puis ça
+            }
+
             if (!neighbor->getVisited())
             {
                 neighbor->setVisited(true);
-                predecesseurs[neighbor] = current; // Enregistrer le prédécesseur
+                predecesseurs[neighbor] = current;
+
                 file.enfiler(neighbor);
             }
             adjacents = adjacents->next;
         }
     }
-    // Si on arrive ici, cela signifie qu'il n'y a pas de chemin entre l'origine et la destination
     cout << "Aucun chemin trouvé entre " << o << " et " << d << "." << endl;
     return 0;
 }
 
 int graphe::itineraire(string o, string d)
 {
-    // Trouver les noeuds associés aux arcs par leurs identifiants
     node *startingNode = V.rechercherNode(E.chercherArc(o)->getStartingNode()); // Recherche le noeud de départ par l'ID de l'arc o
     node *endingNode = V.rechercherNode(E.chercherArc(d)->getEndingNode());     // Recherche le noeud de destination par l'ID de l'arc d
+
     if (startingNode == nullptr || endingNode == nullptr)
     {
         cout << "Un des noeuds n'a pas été trouvé." << endl;
-        return 0; // Retourne 0 si l'un des noeuds est introuvable
+        return 0;
     }
-    // Appeler la fonction pour obtenir le plus court chemin entre les deux noeuds
+
     int cpt = plusCourtChemin(startingNode->getId(), endingNode->getId());
 
-    // Retourner le nombre d'arcs dans le plus court chemin
     return cpt;
 }

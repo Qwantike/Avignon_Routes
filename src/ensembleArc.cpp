@@ -17,7 +17,6 @@ EnsembleArc::EnsembleArc()
 EnsembleArc::EnsembleArc(const string &path, int &cpt)
 {
 
-    // Ouvrir le fichier JSON
     ifstream fichier(path);
     if (!fichier.is_open())
     {
@@ -31,7 +30,6 @@ EnsembleArc::EnsembleArc(const string &path, int &cpt)
     for (const auto &item : data)
     {
         string id = gr.nomRueAvecIndex(item.at("name").get<string>());
-        // string id = item.at("name").get<string>();
         string startingNode = item.at("StartingNode").get<string>();
         string endingNode = item.at("EndingNode").get<string>();
         string oneWay = item.value("oneway", "false");
@@ -42,12 +40,10 @@ EnsembleArc::EnsembleArc(const string &path, int &cpt)
         string maxSpeed = item.value("maxSpeed", "0");
         string speedKph = item.value("speed_kph", "0");
         string travelTime = item.value("travel_time", "0");
-        // this->ajouterArc(id, startingNode, endingNode, oneWay, reversed, lane, highway, length, maxSpeed, speedKph, travelTime);
         arc *a = new arc(id, startingNode, endingNode, oneWay, reversed, lane, highway, length, maxSpeed, speedKph, travelTime);
         this->arcs[id] = a;
         cpt++;
     }
-    // Fermer le fichier
     fichier.close();
 }
 
@@ -60,7 +56,6 @@ EnsembleArc::~EnsembleArc()
     arcs.clear();
 }
 
-// Méthode pour ajouter un arc
 void EnsembleArc::ajouterArc(const string &id, const string &startingNode, const string &endingNode, const string &oneWay, const string &reversed, const string &lane, const string &highway, const string &length, const string &maxSpeed, const string &speedKph, const string &travelTime)
 {
     string idUnique = gr.nomRueAvecIndex(id);
@@ -68,7 +63,6 @@ void EnsembleArc::ajouterArc(const string &id, const string &startingNode, const
     arcs[idUnique] = a;
 }
 
-// Méthode pour obtenir un arc par son id
 arc *EnsembleArc::chercherArc(const string &id)
 {
     if (arcs.find(id) != arcs.end())
@@ -78,7 +72,6 @@ arc *EnsembleArc::chercherArc(const string &id)
     return nullptr;
 }
 
-// Méthode pour supprimer un arc par son nom
 void EnsembleArc::supprimerArc(const string &nom)
 {
     if (arcs.find(nom) != arcs.end())
@@ -97,37 +90,37 @@ void EnsembleArc::test()
 {
     for (const auto &pair : arcs)
     {
-        // Affiche l'ID de chaque arc
         cout << "Arc ID : " << pair.first << endl;
         cout << "Vérification ID : " << pair.second->getId() << endl;
     }
     cout << "TEST FINI" << endl;
 }
-// Constructeur de copie (copie profonde des arcs)
+// Constructeur par recopie (copie profonde des arcs)
 EnsembleArc::EnsembleArc(const EnsembleArc &other)
 {
-    this->gr = other.gr; // Copie de gr (si nécessaire)
+    // copie gr
+    this->gr = other.gr;
 
-    // Copie profonde de la map arcs
+    // copie map arcs
     for (const auto &pair : other.arcs)
     {
-        this->arcs[pair.first] = new arc(*pair.second); // Copie de chaque arc
+        this->arcs[pair.first] = new arc(*pair.second);
     }
 }
 
 // Opérateur d'affectation
 EnsembleArc &EnsembleArc::operator=(const EnsembleArc &other)
 {
+    // != auto-affectation
     if (this != &other)
-    { // éviter l'auto-affectation
-        // Libérer la mémoire existante
+    {
         for (auto &pair : this->arcs)
         {
             delete pair.second;
         }
         this->arcs.clear();
 
-        // Copie de la gestionnaire de rue
+        // Copie gestionnaire de rue
         this->gr = other.gr;
 
         // Copie profonde des arcs
@@ -141,15 +134,13 @@ EnsembleArc &EnsembleArc::operator=(const EnsembleArc &other)
 
 string EnsembleArc::rechercherArc(string o, string d)
 {
-    // Parcourir chaque arc dans le unordered_map
     for (const auto &pair : arcs)
     {
         arc *currentArc = pair.second;
 
-        // Comparer les noeuds de départ et d'arrivée
         if (currentArc->getStartingNode() == o && currentArc->getEndingNode() == d)
         {
-            return currentArc->getId(); // Retourner l'ID de l'arc
+            return currentArc->getId();
         }
     }
     return "";

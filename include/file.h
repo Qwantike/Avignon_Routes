@@ -5,9 +5,9 @@ using namespace std;
 class File
 {
 private:
-    Maillon *tete;  // Début de la file
-    Maillon *queue; // Fin de la file
-    int nbElements; // Nombre d'éléments dans la file
+    Maillon *tete;
+    Maillon *queue;
+    int nbElements;
 
 public:
     File();

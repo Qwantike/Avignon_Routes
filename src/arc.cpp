@@ -1,6 +1,5 @@
 #include "arc.h"
 
-// Constructeur d'arc
 arc::arc(string id, string startingNode, string endingNode, string oneWay, string reversed, string lane, string highway, string length, string maxSpeed, string speedKph, string travelTime)
 {
     this->id = id;
@@ -29,7 +28,6 @@ arc::arc(string id, string startingNode, string endingNode, string oneWay, strin
     this->travelTime = travelTime;
 }
 
-// Fonction afficher
 void arc::affiche()
 {
     cout << "Nom de la rue/id : " << this->id << endl;
@@ -56,9 +54,7 @@ void arc::affiche()
     }
     cout << "Temps de trajet : " << this->travelTime << endl;
 }
-/////////////
-// getters //
-/////////////
+
 string arc::getEndingNode()
 {
     return this->endingNode;

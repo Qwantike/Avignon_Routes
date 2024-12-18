@@ -12,16 +12,16 @@ int main()
     const string nodeInputFilePath = "../data/nodes.csv";   // chemin du fichier CSV d'entrée (node)
     const string nodeOutputFilePath = "../data/nodes.json"; // chemin du fichier JSON de sortie(node)
 
-    // parser les fichiers CSV et le convertir en JSON
+    // csv to json
     // arcsCsvToJson(arcInputFilePath, arcOutputFilePath);
     // nodesCsvToJson(nodeInputFilePath, nodeOutputFilePath);
 
     int n;
-    // cout << "Nombre de noeuds à afficher (trié par degré) ?" << endl;
+    cout << "Nombre de noeuds à afficher (trié par degré) ?" << endl;
     // cin >> n;
     graphe *G = new graphe(arcOutputFilePath, nodeOutputFilePath);
     // G->degre(n);
-    //  int cpt = G->chemin("1118550826", "1118550821"); // via 7549202749 Rue Condorcet - Rue Lavoisier
+    // int cpt = G->chemin("1118550826", "1118550821"); // via 7549202749 Rue Condorcet - Rue Lavoisier
     // int cpt = G->plusCourtChemin("7528809017", "905829507"); // 7528809017 - 313092140 - 7528809014 - 7528809023 - 905829450 - 905829507 verdun, chartreux, chartreux, chartreux, rue porte rouge
     int cpt = G->itineraire("Avenue de Verdun-38", "Rue Porte Rouge");
     cout << "Nombre d'arcs parcourus : " << cpt << endl;

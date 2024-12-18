@@ -145,11 +145,9 @@ void Pile::afficherArcPile(EnsembleArc &ensembleArc)
         if (!arcId.empty())
         {
             affichage += arcId;
-            // cout << arcId << " - ";
         }
         else
         {
-            // cout << "[Arc introuvable] - ";
             affichage += "[Arc introuvable]";
         }
         affichage += " - ";

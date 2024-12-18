@@ -13,4 +13,4 @@ using namespace std;
 void arcsCsvToJson(const string &inputFilePath, const string &outputFilePath);
 void nodesCsvToJson(const string &inputFilePath, const string &outputFilePath);
 
-#endif // RAWTOJSON_H
+#endif

@@ -9,16 +9,15 @@ File::File()
 
 void File::enfiler(node *n)
 {
-    Maillon *nouveau = new Maillon(n, nullptr, nullptr); // Utilise seulement `suivant`
+    Maillon *nouveau = new Maillon(n, nullptr, nullptr);
     if (queue == nullptr)
     {
-        // File vide : tête et queue pointent vers le même maillon
         tete = queue = nouveau;
     }
     else
     {
-        queue->setSuivant(nouveau); // Ajoute après la queue
-        queue = nouveau;            // Met à jour la queue
+        queue->setSuivant(nouveau);
+        queue = nouveau;
     }
     nbElements++;
 }
